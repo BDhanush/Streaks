@@ -1,14 +1,18 @@
 package com.example.streaks.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.streaks.R
+import com.example.streaks.StreakActivity
 import com.example.streaks.model.Streak
+import com.google.android.material.card.MaterialCardView
 import java.util.*
 import kotlin.time.Duration.Companion.days
+import kotlin.time.DurationUnit
 
 class StreakItemAdapter(private val dataSet: Array<Streak>) :
     RecyclerView.Adapter<StreakItemAdapter.ViewHolder>() {
@@ -20,6 +24,7 @@ class StreakItemAdapter(private val dataSet: Array<Streak>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleTextView: TextView = view.findViewById(R.id.title)
         val countTextView: TextView = view.findViewById(R.id.count)
+        val streakCard:MaterialCardView = view.findViewById(R.id.streakCard)
     }
 
     // Create new views (invoked by the layout manager)
@@ -40,8 +45,14 @@ class StreakItemAdapter(private val dataSet: Array<Streak>) :
         val startTime = dataSet[position].startTime
         val curTime = Date().time
         val dif = startTime - curTime
-        val difInDays = dif.days
-        viewHolder.titleTextView.text = difInDays.toString()
+        val difInDays = dif.days.toLong(DurationUnit.DAYS)
+        viewHolder.countTextView.text = difInDays.toString()
+        viewHolder.streakCard.setOnClickListener {
+            val intent = Intent(viewHolder.itemView.context, StreakActivity::class.java)
+            intent.putExtra("title", dataSet[position].title)
+            intent.getLongExtra("count", difInDays)
+            viewHolder.itemView.context.startActivity(intent)
+        }
 
     }
 

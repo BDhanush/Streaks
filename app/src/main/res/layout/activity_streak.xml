@@ -29,14 +29,14 @@
 
         />
     <Button
-        android:id="@+id/refreshButton"
+        android:id="@+id/resetButton"
         style="@style/Widget.Material3.Button.ElevatedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/refresh"
+        android:text="@string/reset"
         android:layout_marginBottom="16dp"
         app:icon="@drawable/baseline_add_24"
         />

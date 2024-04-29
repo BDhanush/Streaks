@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         val dataset:Array<Streak> = arrayOf()
+        // to do
         val adapter = StreakItemAdapter(dataset)
         binding.streakRecyclerView.adapter = adapter
 
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 .setView(addStreakView)
                 .setPositiveButton("Add") { dialog, which ->
                     val curTime = Date().time
-
+                    // to do
                 }
                 .setNegativeButton("Cancel") { dialog, which ->
                     dialog.dismiss()
