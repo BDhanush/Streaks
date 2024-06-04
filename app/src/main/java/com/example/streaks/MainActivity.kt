@@ -2,6 +2,7 @@ package com.example.streaks
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.streaks.adapter.StreakItemAdapter
 import com.example.streaks.databinding.ActivityMainBinding
 import com.example.streaks.databinding.AddStreakBinding
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         val dataset:Array<Streak> = arrayOf()
         // to do
         val adapter = StreakItemAdapter(dataset)
+        binding.streakRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.streakRecyclerView.adapter = adapter
 
         binding.addButton.setOnClickListener {
