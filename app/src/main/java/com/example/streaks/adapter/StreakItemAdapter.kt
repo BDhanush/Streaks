@@ -14,7 +14,7 @@ import java.util.*
 import kotlin.time.Duration.Companion.days
 import kotlin.time.DurationUnit
 
-class StreakItemAdapter(private val dataSet: Array<Streak>) :
+class StreakItemAdapter(private val dataSet: List<Streak>) :
     RecyclerView.Adapter<StreakItemAdapter.ViewHolder>() {
 
     /**
