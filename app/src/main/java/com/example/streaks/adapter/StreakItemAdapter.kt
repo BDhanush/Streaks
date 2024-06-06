@@ -11,10 +11,10 @@ import com.example.streaks.StreakActivity
 import com.example.streaks.model.Streak
 import com.google.android.material.card.MaterialCardView
 import java.util.*
-import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
 
-class StreakItemAdapter(private val dataSet: Array<Streak>) :
+class StreakItemAdapter(private val dataSet: List<Streak>) :
     RecyclerView.Adapter<StreakItemAdapter.ViewHolder>() {
 
     /**
@@ -44,13 +44,14 @@ class StreakItemAdapter(private val dataSet: Array<Streak>) :
         viewHolder.titleTextView.text = dataSet[position].title
         val startTime = dataSet[position].startTime
         val curTime = Date().time
-        val dif = startTime - curTime
-        val difInDays = dif.days.toLong(DurationUnit.DAYS)
+        val dif = curTime - startTime
+        val difInDays = dif.milliseconds.toLong(DurationUnit.DAYS)
         viewHolder.countTextView.text = difInDays.toString()
         viewHolder.streakCard.setOnClickListener {
             val intent = Intent(viewHolder.itemView.context, StreakActivity::class.java)
             intent.putExtra("title", dataSet[position].title)
-            intent.getLongExtra("count", difInDays)
+            intent.putExtra("count", difInDays)
+            intent.putExtra("id", dataSet[position].id)
             viewHolder.itemView.context.startActivity(intent)
         }
 
