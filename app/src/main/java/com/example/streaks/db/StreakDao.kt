@@ -1,13 +1,10 @@
-
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+package com.example.streaks.db
+import androidx.room.*
 import com.example.streaks.model.Streak
 
 @Dao
 interface StreakDao {
-    @Query("SELECT * FROM streak_table")
+    @Query("SELECT * FROM streak")
     fun getAll(): List<Streak>
 
 //    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
@@ -17,7 +14,7 @@ interface StreakDao {
 //            "last_name LIKE :last LIMIT 1")
 //    fun findByName(first: String, last: String): User
 //
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(streak: Streak)
 
     @Delete
