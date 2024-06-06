@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         val dataset:List<Streak> = streakDao.getAll()
         val adapter = StreakItemAdapter(dataset)
+        binding.streakRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.streakRecyclerView.adapter = adapter
 
         // to do
