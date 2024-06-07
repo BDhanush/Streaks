@@ -44,6 +44,7 @@
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 tools:text="100"
+                android:padding="8dp"
                 android:layout_gravity="center"
                 />
             <ImageView
