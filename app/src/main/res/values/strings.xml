@@ -4,5 +4,7 @@
     <string name="day">day</string>
     <string name="reset">reset</string>
     <string name="title">Title</string>
+    <string name="hour">hour</string>
+    <string name="hours">hours</string>
 
 </resources>

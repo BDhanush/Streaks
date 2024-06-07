@@ -54,7 +54,7 @@ class StreakItemAdapter(private val dataSet: MutableList<Streak>) :
         viewHolder.streakCard.setOnClickListener {
             val intent = Intent(viewHolder.itemView.context, StreakActivity::class.java)
             intent.putExtra("title", dataSet[position].title)
-            intent.putExtra("count", difInDays)
+            intent.putExtra("startTime", startTime)
             intent.putExtra("id", dataSet[position].id)
             viewHolder.itemView.context.startActivity(intent)
         }

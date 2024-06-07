@@ -7,6 +7,8 @@ import com.example.streaks.databinding.ActivityStreakBinding
 import com.example.streaks.db.StreakDatabase
 import com.example.streaks.model.Streak
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.DurationUnit
 
 class StreakActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStreakBinding
@@ -18,11 +20,28 @@ class StreakActivity : AppCompatActivity() {
 
         val title=intent.getStringExtra("title")
         setTitle(title)
-        val count=intent.getLongExtra("count",0)
+        val startTime=intent.getLongExtra("startTime",0)
         val id=intent.getLongExtra("id",0)
 
+        val curTime = Date().time
+        val dif = curTime - startTime
+        val difInDays = dif.milliseconds.toLong(DurationUnit.DAYS)
+        val difInHours = dif.milliseconds.toLong(DurationUnit.HOURS)
+
+        var count = difInDays
+        binding.daysAndHours.text = if(count==1L) resources.getString(R.string.day) else resources.getString(R.string.days)
         binding.count.text = count.toString()
-        binding.days.text = if(count==1L) resources.getString(R.string.day) else resources.getString(R.string.days)
+
+        binding.daysToggle.setOnClickListener {
+            count = difInDays
+            binding.daysAndHours.text = if(count==1L) resources.getString(R.string.day) else resources.getString(R.string.days)
+            binding.count.text = count.toString()
+        }
+        binding.hoursToggle.setOnClickListener {
+            count = difInHours
+            binding.daysAndHours.text = if(count==1L) resources.getString(R.string.hour) else resources.getString(R.string.hours)
+            binding.count.text = count.toString()
+        }
 
         binding.resetButton.setOnClickListener {
             // to do
