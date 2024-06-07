@@ -17,15 +17,13 @@ class StreakActivity : AppCompatActivity() {
         setContentView(view)
 
         val title=intent.getStringExtra("title")
+        setTitle(title)
         val count=intent.getLongExtra("count",0)
         val id=intent.getIntExtra("id",0)
 
         actionBar?.title = title
         binding.count.text = count.toString()
-        if(count==1L)
-        {
-            binding.days.text = resources.getString(R.string.day)
-        }
+        binding.days.text = if(count==1L) resources.getString(R.string.day) else resources.getString(R.string.days)
 
         binding.resetButton.setOnClickListener {
             // to do
