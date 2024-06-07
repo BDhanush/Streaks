@@ -90,6 +90,7 @@ class StreakItemAdapter(private val dataSet: MutableList<Streak>) :
         MainActivity.database.streakDao().delete(dataSet[position])
         dataSet.removeAt(position)
         notifyItemRemoved(position)
+        notifyItemRangeChanged(position,dataSet.size)
         Toast.makeText(context,"Streak Deleted", Toast.LENGTH_LONG).show()
     }
     // Return the size of your dataset (invoked by the layout manager)
