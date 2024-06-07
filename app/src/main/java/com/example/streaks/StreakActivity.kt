@@ -19,9 +19,8 @@ class StreakActivity : AppCompatActivity() {
         val title=intent.getStringExtra("title")
         setTitle(title)
         val count=intent.getLongExtra("count",0)
-        val id=intent.getIntExtra("id",0)
+        val id=intent.getLongExtra("id",0)
 
-        actionBar?.title = title
         binding.count.text = count.toString()
         binding.days.text = if(count==1L) resources.getString(R.string.day) else resources.getString(R.string.days)
 

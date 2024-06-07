@@ -15,7 +15,7 @@ interface StreakDao {
 //    fun findByName(first: String, last: String): User
 //
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(streak: Streak)
+    fun insert(streak: Streak):Long
 
     @Delete
     fun delete(streak: Streak)

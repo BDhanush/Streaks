@@ -80,7 +80,16 @@ class StreakItemAdapter(private val dataSet: MutableList<Streak>) :
 
     fun addStreak(streak: Streak,context: Context)
     {
-        MainActivity.database.streakDao().insert(streak)
+        if(streak.title.isEmpty())
+        {
+            val alertDialog = MaterialAlertDialogBuilder(context)
+                .setTitle("Invalid Streak")
+                .setMessage("Title cannot be empty")
+                .create()
+            alertDialog.show()
+            return
+        }
+        streak.id = MainActivity.database.streakDao().insert(streak)
         dataSet.add(streak)
         notifyItemInserted(dataSet.size-1)
         Toast.makeText(context,"Adding Streak successful",Toast.LENGTH_LONG).show()
