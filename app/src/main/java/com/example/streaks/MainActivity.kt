@@ -1,7 +1,6 @@
 package com.example.streaks
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val database =  Room.databaseBuilder(
+        database =  Room.databaseBuilder(
             applicationContext,
             StreakDatabase::class.java,
             StreakDatabase.NAME
@@ -36,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         val streakDao: StreakDao = database.streakDao()
 
-        val dataset:List<Streak> = streakDao.getAll()
+        val dataset:MutableList<Streak> = streakDao.getAll().toMutableList()
         val adapter = StreakItemAdapter(dataset)
         binding.streakRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.streakRecyclerView.adapter = adapter
@@ -54,12 +53,7 @@ class MainActivity : AppCompatActivity() {
                     val curTime = Date().time
                     // to do
                     val title = addStreakBinding.title.text.toString()
-                    if(streakDao!=null)
-                    {
-                        streakDao.insert(Streak(title,curTime))
-                    }else{
-                        Toast.makeText(applicationContext,"Adding Streak unsuccessful",Toast.LENGTH_LONG).show()
-                    }
+                    adapter.addStreak(Streak(title,curTime),this)
                 }
                 .setNegativeButton("Cancel") { dialog, which ->
                     dialog.dismiss()

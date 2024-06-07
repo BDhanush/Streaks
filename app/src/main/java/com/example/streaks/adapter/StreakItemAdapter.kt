@@ -1,20 +1,24 @@
 package com.example.streaks.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.streaks.MainActivity
 import com.example.streaks.R
 import com.example.streaks.StreakActivity
 import com.example.streaks.model.Streak
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
 
-class StreakItemAdapter(private val dataSet: List<Streak>) :
+class StreakItemAdapter(private val dataSet: MutableList<Streak>) :
     RecyclerView.Adapter<StreakItemAdapter.ViewHolder>() {
 
     /**
@@ -55,8 +59,40 @@ class StreakItemAdapter(private val dataSet: List<Streak>) :
             viewHolder.itemView.context.startActivity(intent)
         }
 
+
+        viewHolder.streakCard.setOnLongClickListener {
+            val alertDialog = MaterialAlertDialogBuilder(viewHolder.itemView.context)
+                .setTitle("Delete streak: ${dataSet[position].title}")
+                .setMessage("Streak will be lost")
+                .setPositiveButton("Delete") { dialog, which ->
+                    val streakDao = MainActivity.database.streakDao()
+                    deleteStreak(position,viewHolder.itemView.context)
+                }
+                .setNegativeButton("Cancel") { dialog, which ->
+                    dialog.dismiss()
+                }
+                .create()
+            alertDialog.show()
+            return@setOnLongClickListener true
+        }
+
     }
 
+    fun addStreak(streak: Streak,context: Context)
+    {
+        MainActivity.database.streakDao().insert(streak)
+        dataSet.add(streak)
+        notifyItemInserted(dataSet.size-1)
+        Toast.makeText(context,"Adding Streak successful",Toast.LENGTH_LONG).show()
+    }
+    fun deleteStreak(position: Int,context: Context)
+    {
+        MainActivity.database.streakDao().delete(dataSet[position])
+        dataSet.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position,dataSet.size)
+        Toast.makeText(context,"Streak Deleted", Toast.LENGTH_LONG).show()
+    }
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
