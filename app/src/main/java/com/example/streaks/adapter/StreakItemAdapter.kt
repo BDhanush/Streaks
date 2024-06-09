@@ -80,6 +80,7 @@ class StreakItemAdapter(private val dataSet: MutableList<Streak>) :
 
     fun addStreak(streak: Streak,context: Context)
     {
+        streak.title = streak.title.trim()
         if(streak.title.isEmpty())
         {
             val alertDialog = MaterialAlertDialogBuilder(context)

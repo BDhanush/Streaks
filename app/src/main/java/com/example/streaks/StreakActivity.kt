@@ -2,10 +2,9 @@ package com.example.streaks
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import com.example.streaks.databinding.ActivityStreakBinding
-import com.example.streaks.db.StreakDatabase
 import com.example.streaks.model.Streak
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
@@ -37,26 +36,38 @@ class StreakActivity : AppCompatActivity() {
             binding.count.text = count.toString()
         }
 
-        binding.daysToggle.performClick()
+        refreshCount()
         binding.resetButton.setOnClickListener {
             // to do
-            val database =  Room.databaseBuilder(
-                applicationContext,
-                StreakDatabase::class.java,
-                StreakDatabase.NAME
-            ).allowMainThreadQueries().build()
-            title?.let { it1 -> Streak(it1, Date().time,id) }?.let { it2 -> database.streakDao().insert(it2) }
-            startTime = Date().time
-            if(binding.toggleButtons.checkedButtonId==R.id.daysToggle)
-            {
-                binding.daysToggle.performClick()
-            }else if(binding.toggleButtons.checkedButtonId==R.id.hoursToggle)
-            {
-                binding.hoursToggle.performClick()
-            }
+            val alertDialog = MaterialAlertDialogBuilder(this)
+                .setTitle("Reset Streak")
+                .setMessage("Your streak will be reset, you'll start from 0")
+                .setPositiveButton("Reset") { dialog, which ->
+
+                    val streakDao = MainActivity.database.streakDao()
+                    title?.let { it1 -> Streak(it1, Date().time,id) }?.let { it2 -> streakDao.insert(it2) }
+                    startTime = Date().time
+                    refreshCount()
+                }
+                .setNegativeButton("Cancel") { dialog, which ->
+                    dialog.dismiss()
+                }
+                .create()
+            alertDialog.show()
         }
 
 
+    }
+
+    fun refreshCount()
+    {
+        if(binding.toggleButtons.checkedButtonId==R.id.daysToggle)
+        {
+            binding.daysToggle.performClick()
+        }else if(binding.toggleButtons.checkedButtonId==R.id.hoursToggle)
+        {
+            binding.hoursToggle.performClick()
+        }
     }
 
     fun getDif(startTime:Long):Long
