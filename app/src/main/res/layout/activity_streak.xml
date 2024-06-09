@@ -5,6 +5,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:checkedButton="@id/daysToggle"
+
+        >
+
+        <Button
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/daysToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/days"
+            />
+
+        <Button
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/hoursToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hours"
+            android:enabled="false"
+
+            />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
     <TextView
         android:id="@+id/count"
         android:layout_width="wrap_content"
@@ -18,7 +51,7 @@
 
         />
     <TextView
-        android:id="@+id/days"
+        android:id="@+id/daysAndHours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/count"

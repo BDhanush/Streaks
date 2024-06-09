@@ -7,6 +7,8 @@ import com.example.streaks.databinding.ActivityStreakBinding
 import com.example.streaks.db.StreakDatabase
 import com.example.streaks.model.Streak
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.DurationUnit
 
 class StreakActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStreakBinding
@@ -18,12 +20,24 @@ class StreakActivity : AppCompatActivity() {
 
         val title=intent.getStringExtra("title")
         setTitle(title)
-        val count=intent.getLongExtra("count",0)
+        var startTime=intent.getLongExtra("startTime",0)
         val id=intent.getLongExtra("id",0)
 
-        binding.count.text = count.toString()
-        binding.days.text = if(count==1L) resources.getString(R.string.day) else resources.getString(R.string.days)
 
+        binding.daysToggle.setOnClickListener {
+            val dif = getDif(startTime)
+            val count = getDifInDays(dif)
+            binding.daysAndHours.text = if(count==1L) resources.getString(R.string.day) else resources.getString(R.string.days)
+            binding.count.text = count.toString()
+        }
+        binding.hoursToggle.setOnClickListener {
+            val dif = getDif(startTime)
+            val count = getDifInHours(dif)
+            binding.daysAndHours.text = if(count==1L) resources.getString(R.string.hour) else resources.getString(R.string.hours)
+            binding.count.text = count.toString()
+        }
+
+        binding.daysToggle.performClick()
         binding.resetButton.setOnClickListener {
             // to do
             val database =  Room.databaseBuilder(
@@ -32,8 +46,31 @@ class StreakActivity : AppCompatActivity() {
                 StreakDatabase.NAME
             ).allowMainThreadQueries().build()
             title?.let { it1 -> Streak(it1, Date().time,id) }?.let { it2 -> database.streakDao().insert(it2) }
-            binding.count.text=0.toString()
+            startTime = Date().time
+            if(binding.toggleButtons.checkedButtonId==R.id.daysToggle)
+            {
+                binding.daysToggle.performClick()
+            }else if(binding.toggleButtons.checkedButtonId==R.id.hoursToggle)
+            {
+                binding.hoursToggle.performClick()
+            }
         }
 
+
+    }
+
+    fun getDif(startTime:Long):Long
+    {
+        return Date().time-startTime
+    }
+
+    fun getDifInDays(dif:Long):Long
+    {
+        return dif.milliseconds.toLong(DurationUnit.DAYS)
+    }
+
+    fun getDifInHours(dif:Long):Long
+    {
+        return dif.milliseconds.toLong(DurationUnit.HOURS)
     }
 }
