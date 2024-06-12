@@ -1,11 +1,12 @@
 package com.example.streaks.db
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.streaks.model.Streak
 
 @Dao
 interface StreakDao {
     @Query("SELECT * FROM streak")
-    fun getAll(): List<Streak>
+    fun getAll(): LiveData<List<Streak>>
 
 //    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
 //    fun loadAllByIds(userIds: IntArray): List<User>

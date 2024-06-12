@@ -35,10 +35,14 @@ class MainActivity : AppCompatActivity() {
 
         val streakDao: StreakDao = database.streakDao()
 
-        val dataset:MutableList<Streak> = streakDao.getAll().toMutableList()
+        val dataset:List<Streak> = listOf()
         val adapter = StreakItemAdapter(dataset)
         binding.streakRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.streakRecyclerView.adapter = adapter
+
+        streakDao.getAll().observe(this) { dataset ->
+            adapter.updateDataset(dataset)
+        }
 
         // to do
         binding.streakRecyclerView.layoutManager = LinearLayoutManager(this)

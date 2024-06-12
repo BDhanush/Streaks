@@ -18,7 +18,7 @@ import java.util.*
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
 
-class StreakItemAdapter(private val dataSet: MutableList<Streak>) :
+class StreakItemAdapter(private var dataSet: List<Streak>) :
     RecyclerView.Adapter<StreakItemAdapter.ViewHolder>() {
 
     /**
@@ -91,19 +91,25 @@ class StreakItemAdapter(private val dataSet: MutableList<Streak>) :
             return
         }
         streak.id = MainActivity.database.streakDao().insert(streak)
-        dataSet.add(streak)
-        notifyItemInserted(dataSet.size-1)
+//        dataSet.add(streak)
+//        notifyItemInserted(dataSet.size-1)
         Toast.makeText(context,"Adding Streak successful",Toast.LENGTH_LONG).show()
     }
     fun deleteStreak(position: Int,context: Context)
     {
         MainActivity.database.streakDao().delete(dataSet[position])
-        dataSet.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position,dataSet.size)
+//        dataSet.removeAt(position)
+//        notifyItemRemoved(position)
+//        notifyItemRangeChanged(position,dataSet.size)
         Toast.makeText(context,"Streak Deleted", Toast.LENGTH_LONG).show()
     }
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+    fun updateDataset(dataSet:List<Streak>)
+    {
+        this.dataSet=dataSet
+        notifyDataSetChanged()
+    }
 
 }
