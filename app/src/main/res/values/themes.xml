@@ -3,6 +3,7 @@
     <style name="Base.Theme.Streaks" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/black</item>
     </style>
 
     <style name="Theme.Streaks" parent="Base.Theme.Streaks" />

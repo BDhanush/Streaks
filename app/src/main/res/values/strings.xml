@@ -6,5 +6,6 @@
     <string name="title">Title</string>
     <string name="hour">hour</string>
     <string name="hours">hours</string>
+    <string name="plus">plus</string>
 
 </resources>
