@@ -6,16 +6,16 @@ plugins {
 }
 
 android {
-    namespace = "com.example.streaks"
+    namespace = "com.dhanush.streaks"
     compileSdk = 34
     buildFeatures {
         viewBinding = true
     }
     defaultConfig {
-        applicationId = "com.example.streaks"
+        applicationId = "com.dhanush.streaks"
         minSdk = 27
         targetSdk = 34
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
